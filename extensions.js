@@ -567,18 +567,11 @@ export const LanguageDetectionExtension = {
   render: ({ trace, element }) => {
     // Detect the browser language
     const browserLanguage = navigator.language || navigator.userLanguage;
-    
-    // Store the language in session storage
-    sessionStorage.setItem('browserLanguage', browserLanguage);
 
-    // Debugging: Log the stored language
-    console.log('Stored browser language in session:', sessionStorage.getItem('browserLanguage'));
-
-    // Optionally, send the detected language back to the chat
+    // Send the detected language back to the chat
     window.voiceflow.chat.interact({
       type: 'complete',
       payload: { detectedLanguage: browserLanguage },
     });
   },
 };
-
