@@ -594,13 +594,6 @@ export const LanguageDetectionExtension = {
   },
 };
 
-export const ConfettiExtension = {
-  // ... (ConfettiExtension code remains unchanged)
-};
-
-export const FeedbackExtension = {
-  // ... (FeedbackExtension code remains unchanged)
-};
 
 // Update the export statement to include the new LanguageDetectionExtension
 export {
