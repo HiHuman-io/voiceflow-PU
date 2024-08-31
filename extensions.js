@@ -597,13 +597,5 @@ export const LanguageDetectionExtension = {
 
 // Update the export statement to include the new LanguageDetectionExtension
 export {
-  FormExtension,
-  MapExtension,
-  VideoExtension,
-  TimerExtension,
-  FileUploadExtension,
-  KBUploadExtension,
-  DateExtension,
   LanguageDetectionExtension,  // Add this line
-  ConfettiExtension,
 };
