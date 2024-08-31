@@ -593,9 +593,3 @@ export const LanguageDetectionExtension = {
     });
   },
 };
-
-
-// Update the export statement to include the new LanguageDetectionExtension
-export {
-  LanguageDetectionExtension,  // Add this line
-};
