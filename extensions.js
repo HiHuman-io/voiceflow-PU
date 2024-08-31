@@ -559,18 +559,59 @@ export const FeedbackExtension = {
   },
 };
 
-export const BrowserLanguageExtension = {
-  name: "BrowserLanguage",
-  type: "effect",
+export const LanguageDetectionExtension = {
+  name: 'LanguageDetection',
+  type: 'response',
   match: ({ trace }) =>
-    trace.type === "ext_browser_language" ||
-    trace.payload.name === "ext_browser_language",
-  effect: ({ trace }) => {
-    const language = navigator.language || navigator.userLanguage;
+    trace.type === 'ext_language' || trace.payload.name === 'ext_language',
+  render: ({ trace, element }) => {
+    const languageContainer = document.createElement('div');
+    
+    // Detect the browser language
+    const browserLanguage = navigator.language || navigator.userLanguage;
+    
+    languageContainer.innerHTML = `
+      <style>
+        .language-info {
+          padding: 10px;
+          background-color: #f0f0f0;
+          border-radius: 5px;
+          font-size: 14px;
+        }
+      </style>
+      <div class="language-info">
+        Detected browser language: <strong>${browserLanguage}</strong>
+      </div>
+    `;
 
+    element.appendChild(languageContainer);
+
+    // Send the detected language back to the chat
     window.voiceflow.chat.interact({
-      type: "complete",
-      payload: { browserLanguage: language },
+      type: 'complete',
+      payload: { detectedLanguage: browserLanguage },
     });
   },
+};
+
+export const ConfettiExtension = {
+  // ... (ConfettiExtension code remains unchanged)
+};
+
+export const FeedbackExtension = {
+  // ... (FeedbackExtension code remains unchanged)
+};
+
+// Update the export statement to include the new LanguageDetectionExtension
+export {
+  FormExtension,
+  MapExtension,
+  VideoExtension,
+  TimerExtension,
+  FileUploadExtension,
+  KBUploadExtension,
+  DateExtension,
+  LanguageDetectionExtension,  // Add this line
+  ConfettiExtension,
+  FeedbackExtension,
 };
