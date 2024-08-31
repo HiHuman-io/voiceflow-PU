@@ -606,5 +606,4 @@ export {
   DateExtension,
   LanguageDetectionExtension,  // Add this line
   ConfettiExtension,
-  FeedbackExtension,
 };
