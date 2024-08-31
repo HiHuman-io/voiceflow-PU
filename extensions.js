@@ -568,7 +568,7 @@ export const LanguageDetectionExtension = {
     const languageContainer = document.createElement('div');
     
     // Detect the browser language
-    const browserLanguage = navigator.language || navigator.userLanguage;
+    const pageLanguage = document.documentElement.lang || 'unknown';
     
     languageContainer.innerHTML = `
       <style>
@@ -580,7 +580,7 @@ export const LanguageDetectionExtension = {
         }
       </style>
       <div class="language-info">
-        Detected browser language: <strong>${browserLanguage}</strong>
+        Detected browser language: <strong>${pageLanguage}</strong>
       </div>
     `;
 
@@ -589,7 +589,7 @@ export const LanguageDetectionExtension = {
     // Send the detected language back to the chat
     window.voiceflow.chat.interact({
       type: 'complete',
-      payload: { detectedLanguage: browserLanguage },
+      payload: { detectedLanguage: pageLanguage },
     });
   },
 };
