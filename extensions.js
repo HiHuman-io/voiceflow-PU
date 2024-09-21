@@ -559,6 +559,7 @@ export const FeedbackExtension = {
   },
 };
 
+// Language Detection Module
 export const LanguageDetectionExtension = {
   name: 'LanguageDetection',
   type: 'response',
@@ -567,11 +568,67 @@ export const LanguageDetectionExtension = {
   render: ({ trace, element }) => {
     // Detect the browser language
     const browserLanguage = navigator.language || navigator.userLanguage;
-
     // Send the detected language back to the chat
     window.voiceflow.chat.interact({
       type: 'complete',
       payload: { detectedLanguage: browserLanguage },
     });
+  },
+};
+
+// Country and Region Detection Module
+const getSelectedCountryAndRegion = () => {
+  // Get the country select element
+  const countrySelect = document.querySelector('#country-mobile');
+  
+  if (!countrySelect) {
+    console.warn('Country select element not found');
+    return { country: 'Unknown', regionCode: 'Unknown' };
+  }
+  
+  // Get the selected option in the country dropdown
+  const selectedCountryOption = countrySelect.options[countrySelect.selectedIndex];
+  // Extract the country code (data-code) and region information from the selected option
+  const country = selectedCountryOption.textContent.trim();   // e.g., "Japan / EUR"
+  const regionCode = selectedCountryOption.getAttribute('data-code');  // e.g., "jp"
+  
+  return {
+    country: country || 'Unknown Country',
+    regionCode: regionCode || 'Unknown Region Code'
+  };
+};
+
+export const CountryRegionDetectionExtension = {
+  name: 'CountryRegionDetection',
+  type: 'response',
+  match: ({ trace }) =>
+    trace.type === 'ext_country_region' || trace.payload.name === 'ext_country_region',
+  render: async ({ trace, element }) => {
+    try {
+      // Fetch the selected country and region
+      const userCountryInfo = getSelectedCountryAndRegion();
+      
+      // Debugging purposes: log the data
+      console.log('Country:', userCountryInfo.country);
+      console.log('Region Code:', userCountryInfo.regionCode);
+
+      // Send the detected country and region back to the chat
+      await window.voiceflow.chat.interact({
+        type: 'complete',
+        payload: { 
+          country: userCountryInfo.country,
+          regionCode: userCountryInfo.regionCode
+        },
+      });
+    } catch (error) {
+      console.error('Error fetching country and region:', error);
+      await window.voiceflow.chat.interact({
+        type: 'complete',
+        payload: { 
+          country: 'Error',
+          regionCode: 'Error'
+        },
+      });
+    }
   },
 };
