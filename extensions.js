@@ -566,14 +566,13 @@ export const LanguageDetectionExtension = {
   match: ({ trace }) =>
     trace.type === 'ext_language' || trace.payload.name === 'ext_language',
   render: ({ trace, element }) => {
-    if (trace.payload && trace.payload.detectedLanguage) {
-      // Store the detected language without generating a response
-      window.voiceflow.chat.interact({
-        type: 'complete',
-        payload: { detectedLanguage: trace.payload.detectedLanguage },
-      });
-    }
-    // Don't return anything, which should prevent an empty message
+    // Detect the browser language
+    const browserLanguage = navigator.language || navigator.userLanguage;
+    // Send the detected language back to the chat
+    window.voiceflow.chat.interact({
+      type: 'complete',
+      payload: { detectedLanguage: browserLanguage },
+    });
   },
 };
 
