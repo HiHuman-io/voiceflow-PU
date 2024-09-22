@@ -570,7 +570,7 @@ export const LanguageDetectionExtension = {
 
     // Send the detected language back to the chat
     window.voiceflow.chat.interact({
-      type: 'complete',
+      type: 'event',
       payload: { detectedLanguage: browserLanguage },
     });
   },
