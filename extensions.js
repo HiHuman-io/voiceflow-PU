@@ -562,7 +562,7 @@ export const FeedbackExtension = {
 // Language Detection Module
 export const LanguageDetectionExtension = {
   name: 'LanguageDetection',
-  type: 'end',
+  type: 'effect',
   match: ({ trace }) =>
     trace.type === 'ext_language' || trace.payload.name === 'ext_language',
   render: ({ trace, element }) => {
