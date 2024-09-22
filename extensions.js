@@ -562,13 +562,13 @@ export const FeedbackExtension = {
 // Language Detection Module
 export const LanguageDetectionExtension = {
   name: 'LanguageDetection',
-  type: 'response',
+  type: 'end',
   match: ({ trace }) =>
-    trace.type === 'ext_language' || trace.payload.name === 'ext_language',
+    trace.type === 'ext_language'  trace.payload.name === 'ext_language',
   render: ({ trace, element }) => {
     // Detect the browser language
-    const browserLanguage = navigator.language || navigator.userLanguage;
-    // Send the detected language back to the chat without rendering a message
+    const browserLanguage = navigator.language  navigator.userLanguage;
+    // Send the detected language back to the chat
     window.voiceflow.chat.interact({
       type: 'complete',
       payload: { detectedLanguage: browserLanguage },
